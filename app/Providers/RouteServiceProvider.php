@@ -1,9 +1,18 @@
 <?php
 
+/*
+ * This file is part of Gammu Web API
+ *
+ * (c) Kristian Drucker <kristian@rolmi.sk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -53,7 +62,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => 'web',
-            'namespace' => $this->namespace,
+            'namespace'  => $this->namespace,
         ], function ($router) {
             require base_path('routes/web.php');
         });
@@ -70,8 +79,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::group([
             'middleware' => ['api', 'auth:api'],
-            'namespace' => $this->namespace,
-            'prefix' => 'api',
+            'namespace'  => $this->namespace,
+            'prefix'     => 'api',
         ], function ($router) {
             require base_path('routes/api.php');
         });
