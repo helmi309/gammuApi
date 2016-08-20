@@ -1,11 +1,14 @@
 <?php
 
-/**
- * Laravel - A PHP Framework For Web Artisans
+/*
+ * This file is part of Gammu Web API
  *
- * @package  Laravel
- * @author   Taylor Otwell <taylor@laravel.com>
+ * (c) Kristian Drucker <kristian@rolmi.sk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
+
 
 $uri = urldecode(
     parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
