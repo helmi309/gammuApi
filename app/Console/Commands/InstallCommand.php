@@ -48,6 +48,8 @@ class InstallCommand extends Command
     {
         $this->line('Initializing installation');
         exec('cp '.base_path('.env.example').' '.base_path('.env'));
+        $this->line('Setting permissions');
+        exec('chmod -R 777 '.base_path());
         $this->line('Creating database');
         exec('touch '.database_path('database.sqlite'));
         exec('php '.base_path('artisan').' migrate');
