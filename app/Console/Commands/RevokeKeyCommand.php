@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of Gammu Web API
+ *
+ * (c) Kristian Drucker <kristian@rolmi.sk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Console\Commands;
 
 use App\Key;
@@ -52,6 +61,6 @@ class RevokeKeyCommand extends Command
             die();
         }
         Key::destroy($key->id);
-        $this->info('Successfully revoked key ' . $this->key);
+        $this->info('Successfully revoked key '.$this->key);
     }
 }

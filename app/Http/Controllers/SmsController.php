@@ -15,7 +15,6 @@ use App\Jobs\SendSMS;
 use App\Key;
 use Illuminate\Http\Request;
 
-
 class SmsController extends Controller
 {
     public function sendSms(Request $request)

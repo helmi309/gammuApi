@@ -19,10 +19,10 @@ class KeyTest extends TestCase
      */
     public function testKey()
     {
-        $key = exec('php ' . base_path('artisan') . ' key:create');
+        $key = exec('php '.base_path('artisan').' key:create');
         $this->assertEquals(32, strlen($key));
 
-        $revoke = exec('php ' . base_path('artisan') . ' key:revoke ' . $key);
-        $this->assertEquals('Successfully revoked key ' . $key, $revoke);
+        $revoke = exec('php '.base_path('artisan').' key:revoke '.$key);
+        $this->assertEquals('Successfully revoked key '.$key, $revoke);
     }
 }

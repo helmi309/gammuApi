@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         InstallCommand::class,
         CreateKeyCommand::class,
-        RevokeKeyCommand::class
+        RevokeKeyCommand::class,
     ];
 
     /**

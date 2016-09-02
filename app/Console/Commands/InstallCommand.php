@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of Gammu Web API
+ *
+ * (c) Kristian Drucker <kristian@rolmi.sk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -38,10 +47,10 @@ class InstallCommand extends Command
     public function handle()
     {
         $this->line('Initializing installation');
-        exec('cp ' . base_path('.env.example') . ' ' . base_path('.env'));
+        exec('cp '.base_path('.env.example').' '.base_path('.env'));
         $this->line('Creating database');
-        exec('touch ' . database_path('database.sqlite'));
-        exec('php ' . base_path('artisan') . ' migrate');
+        exec('touch '.database_path('database.sqlite'));
+        exec('php '.base_path('artisan').' migrate');
         $this->info('Migrated database');
     }
 }
