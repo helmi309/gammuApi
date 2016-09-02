@@ -6,23 +6,28 @@
 
 Gammu SMS Api with queue. You can send messages via this api and it will send it via your gammu sms server. This needs to be deployed on a gammu sms server.
 
+## Installation
+``` bash
+$ php artisan install
+```
+
 ## Documentation
 
 #### Creating auth key
 ``` bash
-    curl -X POST http://gammu.api/key
+$ php artisan key:create
 ```
 
 It will return your auth key. Keep it safe.
 
 #### Revoking auth key
 ``` bash
-    curl -X DELETE http://gammu.api/key?key=yourAuthKey
+$ php artisan key:revoke yourAuthKey
 ```
 
 #### Calling the API
 ``` bash
-    curl -X POST http://gammu.api/send/sms?key=yourAuthKey&to=telNumberToSendTo&message=Your message to send to client
+$ curl -X POST http://gammu.api/send/sms?key=yourAuthKey&to=telNumberToSendTo&message=Your message to send to client
 ```
 
 It will return `Sent message to: telNumberToSendTo`

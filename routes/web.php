@@ -10,6 +10,4 @@
  */
 
 
-Route::post('send/sms', 'SmsController@sendSms');
-Route::post('key', 'KeyController@create');
-Route::delete('key', 'KeyController@revoke');
+Route::post('/', 'SmsController@sendSms');
