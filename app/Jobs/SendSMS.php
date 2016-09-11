@@ -11,6 +11,7 @@
 
 namespace App\Jobs;
 
+use App\Events\SentSMS;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -32,14 +33,13 @@ class SendSMS implements ShouldQueue
      * @param to
      * @param $message
      * @param $callback
-     *
+     * @param Client $http
      */
-    public function __construct($to, $message, $callback)
+    public function __construct($to, $message, $callback, Client $http)
     {
         $this->to = $to;
         $this->message = $message;
         $this->callback = $callback;
-        $this->http = new Client();
     }
 
     /**
@@ -51,12 +51,6 @@ class SendSMS implements ShouldQueue
     {
         $command = 'gammu sendsms TEXT '.$this->to.' -text "'.$this->message.'"';
         exec($command);
-        if($this->callback && env('CALLBACK_URL')) {
-            $this->http->post(env('CALLBACK_URL'), [
-                'json' => [
-                    'callback' => $this->callback
-                ]
-            ]);
-        }
+        event(new SentSMS($this->callback));
     }
 }

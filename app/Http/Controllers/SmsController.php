@@ -13,6 +13,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\SendSMS;
 use App\Key;
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class SmsController extends Controller
@@ -32,7 +33,7 @@ class SmsController extends Controller
         if (!$key) {
             return response('Please enter valid auth key', 401);
         }
-        $this->dispatch(new SendSMS($request->input('to'), $request->input('message'), $request->input('callback')));
+        $this->dispatch(new SendSMS($request->input('to'), $request->input('message'), $request->input('callback'), new Client()));
 
         return response('Sent message to: '.$request->input('to'), 200);
     }
