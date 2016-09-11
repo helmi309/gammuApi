@@ -1,14 +1,18 @@
 <?php
 
+/*
+ * This file is part of Gammu Web API
+ *
+ * (c) Kristian Drucker <kristian@rolmi.sk>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace App\Events;
 
 use GuzzleHttp\Client;
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class SentSMS
 {
@@ -31,15 +35,14 @@ class SentSMS
 
     /**
      * Get the channels the event should broadcast on.
-     *
      */
     public function handle()
     {
-        if($this->callback && env('CALLBACK_URL')) {
+        if ($this->callback && env('CALLBACK_URL')) {
             $http->post(env('CALLBACK_URL'), [
                 'json' => [
-                    'callback' => $this->callback
-                ]
+                    'callback' => $this->callback,
+                ],
             ]);
         }
     }
