@@ -15,23 +15,25 @@ class SentSMS
     use SerializesModels;
 
     protected $callback;
+    protected $http;
 
     /**
      * Create a new event instance.
      *
      * @param $callback
+     * @param $http
      */
-    public function __construct($callback)
+    public function __construct($callback, Client $http)
     {
         $this->callback = $callback;
+        $this->http = $http;
     }
 
     /**
      * Get the channels the event should broadcast on.
      *
-     * @param Client $http
      */
-    public function handle(Client $http)
+    public function handle()
     {
         if($this->callback && env('CALLBACK_URL')) {
             $http->post(env('CALLBACK_URL'), [

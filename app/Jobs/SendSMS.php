@@ -51,6 +51,6 @@ class SendSMS implements ShouldQueue
     {
         $command = 'gammu sendsms TEXT '.$this->to.' -text "'.$this->message.'"';
         exec($command);
-        event(new SentSMS($this->callback));
+        event(new SentSMS($this->callback, null));
     }
 }
