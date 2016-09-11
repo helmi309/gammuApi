@@ -32,16 +32,14 @@ class SendSMS implements ShouldQueue
      * @param to
      * @param $message
      * @param $callback
-     * @param Client $http
      *
-     * @return void
      */
-    public function __construct($to, $message, $callback, Client $http)
+    public function __construct($to, $message, $callback)
     {
         $this->to = $to;
         $this->message = $message;
         $this->callback = $callback;
-        $this->http = $http;
+        $this->http = new Client();
     }
 
     /**

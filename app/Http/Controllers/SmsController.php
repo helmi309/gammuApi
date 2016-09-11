@@ -32,7 +32,7 @@ class SmsController extends Controller
         if (!$key) {
             return response('Please enter valid auth key', 401);
         }
-        $this->dispatch(new SendSMS($request->input('to'), $request->input('message')));
+        $this->dispatch(new SendSMS($request->input('to'), $request->input('message'), $request->input('callback')));
 
         return response('Sent message to: '.$request->input('to'), 200);
     }
