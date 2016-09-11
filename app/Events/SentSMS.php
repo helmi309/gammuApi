@@ -38,12 +38,9 @@ class SentSMS
      */
     public function handle()
     {
-        if($this->callback && env('CALLBACK_URL')) {
-            $this->http->post(env('CALLBACK_URL'), [
-                'json' => [
-                    'callback' => $this->callback,
-                ],
-            ]);
+        if($this->callback) {
+            exec('curl -X POST ' . env('CALLBACK_URL') . '?callback=' . $this->callback);
+            //$this->http->post(env('CALLBACK_URL') . '?callback=' . $this->callback);
         }
     }
 }
