@@ -12,11 +12,11 @@
 namespace App\Jobs;
 
 use App\Events\SentSMS;
+use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use GuzzleHttp\Client;
 
 class SendSMS implements ShouldQueue
 {
@@ -52,5 +52,12 @@ class SendSMS implements ShouldQueue
         $command = 'gammu sendsms TEXT '.$this->to.' -text "'.$this->message.'"';
         exec($command);
         event(new SentSMS($this->callback, null));
+        if ($this->callback && env('CALLBACK_URL')) {
+            $this->http->post(env('CALLBACK_URL'), [
+                'json' => [
+                    'callback' => $this->callback,
+                ],
+            ]);
+        }
     }
 }
