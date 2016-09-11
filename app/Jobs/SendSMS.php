@@ -33,9 +33,8 @@ class SendSMS implements ShouldQueue
      * @param to
      * @param $message
      * @param $callback
-     * @param Client $http
      */
-    public function __construct($to, $message, $callback, Client $http)
+    public function __construct($to, $message, $callback)
     {
         $this->to = $to;
         $this->message = $message;
@@ -51,6 +50,6 @@ class SendSMS implements ShouldQueue
     {
         $command = 'gammu sendsms TEXT '.$this->to.' -text "'.$this->message.'"';
         exec($command);
-        event(new SentSMS($this->callback, null));
+        exec('curl -X POST '.env('CALLBACK_URL').'?callback='.$this->callback);
     }
 }
