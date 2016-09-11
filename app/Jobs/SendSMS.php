@@ -11,8 +11,6 @@
 
 namespace App\Jobs;
 
-use App\Events\SentSMS;
-use GuzzleHttp\Client;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
