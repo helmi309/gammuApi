@@ -29,6 +29,9 @@ class SmsController extends Controller
         if (!$request->input('key')) {
             return response('Please enter auth key', 401);
         }
+        if (count($request->input('to') != 9 || count($request->input('to') != 10)) {
+            return response('Please enter valid telephone number', 400);
+        }
         $key = Key::where('key', $request->input('key'))->first();
         if (!$key) {
             return response('Please enter valid auth key', 401);
