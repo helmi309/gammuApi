@@ -51,7 +51,7 @@ return [
 
         'redis' => [
             'driver'     => 'redis',
-            'connection' => 'default',
+            'connection' => 'subscriber',
         ],
 
         'log' => [

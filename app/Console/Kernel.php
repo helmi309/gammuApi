@@ -14,6 +14,7 @@ namespace App\Console;
 use App\Console\Commands\CreateKeyCommand;
 use App\Console\Commands\InstallCommand;
 use App\Console\Commands\RevokeKeyCommand;
+use App\Console\Commands\SMSListenCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -28,6 +29,7 @@ class Kernel extends ConsoleKernel
         InstallCommand::class,
         CreateKeyCommand::class,
         RevokeKeyCommand::class,
+        SMSListenCommand::class,
     ];
 
     /**
