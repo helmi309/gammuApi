@@ -66,8 +66,8 @@ class SMSListenCommand extends Command
                     echo "-----> Subscribed to {$message->channel}", PHP_EOL;
                     break;
                 case 'message':
-                    $message = json_decode($message->payload, true);
                     echo $message->payload;
+                    $message = json_decode($message->payload, true);
                     dispatch(new SendSMS($message['to'], $message['message'], $message['callback'], new Client()));
                     break;
             }
