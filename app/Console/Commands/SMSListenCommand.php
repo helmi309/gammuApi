@@ -3,9 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Jobs\SendSMS;
-use GuzzleHttp\Client;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Redis;
+use Predis\Client;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class SMSListenCommand extends Command
@@ -49,11 +48,12 @@ class SMSListenCommand extends Command
 
     public function connectRedis(OutputInterface $output)
     {
-        if(!getenv('REDIS_HOST')) {
+        if(!config('database.redis.default.host')) {
             $output->writeln('-----> Redis host not provided');
             die();
         }
-        $this->redis = new Client('tcp://' . config('database.redis.default.host') . ':' . config('database.redis.default.port') ."?read_write_timeout=0");
+        //dd('tcp://' . config('database.redis.default.host') . ':' . config('database.redis.default.port') . "?read_write_timeout=0");
+        $this->redis = new Client('tcp://' . config('database.redis.default.host') . ':' . config('database.redis.default.port') . "?read_write_timeout=0");
     }
 
     public function subscribe(Client $redis)
