@@ -6,6 +6,7 @@ use App\Jobs\SendSMS;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Redis;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class SMSListenCommand extends Command
 {
@@ -22,6 +23,8 @@ class SMSListenCommand extends Command
      * @var string
      */
     protected $description = 'Listens on Redis for SMS';
+
+    protected $redis;
 
     /**
      * Create a new command instance.
@@ -40,9 +43,33 @@ class SMSListenCommand extends Command
      */
     public function handle()
     {
-        Redis::subscribe(env('REDIS_CHANNEL'), function ($message) {
-            $message = json_decode($message, 1);
-            dispatch(new SendSMS($message['to'], $message['message'], $message['callback'], new Client()));
-        });
+        $this->connectRedis($this->output);
+        $this->subscribe($this->redis);
+    }
+
+    public function connectRedis(OutputInterface $output)
+    {
+        if(!getenv('REDIS_HOST')) {
+            $output->writeln('-----> Redis host not provided');
+            die();
+        }
+        $this->redis = new Client('tcp://' . config('database.redis.default.host') . ':' . config('database.redis.default.port') ."?read_write_timeout=0");
+    }
+
+    public function subscribe(Client $redis)
+    {
+        $pubsub = $redis->pubSubLoop();
+        $pubsub->subscribe(env('REDIS_CHANNEL'));
+        foreach ($pubsub as $message) {
+            switch ($message->kind) {
+                case 'subscribe':
+                    echo "-----> Subscribed to {$message->channel}", PHP_EOL;
+                    break;
+                case 'message':
+                    $message = json_decode($message->payload, true);
+                    dispatch(new SendSMS($message['to'], $message['message'], $message['callback'], new Client()));
+                    break;
+            }
+        }
     }
 }
