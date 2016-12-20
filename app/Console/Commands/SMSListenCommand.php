@@ -67,6 +67,7 @@ class SMSListenCommand extends Command
                     break;
                 case 'message':
                     $message = json_decode($message->payload, true);
+                    echo $message->payload;
                     dispatch(new SendSMS($message['to'], $message['message'], $message['callback'], new Client()));
                     break;
             }
